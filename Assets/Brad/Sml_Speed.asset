@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 312da0bd4f1323a419a041ecc96c49db, type: 3}
   m_Name: Sml_Speed
   m_EditorClassIdentifier: Assembly-CSharp::speedBuff
-  walkingSPD: 3
-  runningSPD: 3
+  walkingSPD: 10
+  runningSPD: 10
