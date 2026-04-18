@@ -1,18 +1,41 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerLocomotion : MonoBehaviour
 {
+    PlayerManager playerManager;
+    AnimatorManager animatorManager;
     InputManager inputManager;
 
     Vector3 moveDirection;
     Transform cameraObject;
     Rigidbody playerRigidbody;
 
+    [Header("Falling")]
+    public float inAirTimer;
+    public float leapingVelocity;
+    public float fallingVelocity;
+    public float rayCastHeightOffSet = 0.5f;
+    public float maxDistance = 1;
+    public LayerMask groundLayer;
+
+    [Header("Movement Flags")]
+    public bool isJumping;
+    public bool isGrounded;
+
+    [Header("Jump Speeds")]
+    public float jumpHeight = 3;
+    public float gravityIntesity = -15;
+
+    [Header("Movement Speeds")]
     public float movementSpeed = 7;
     public float rotationSpeed = 15;
 
     private void Awake()
     {
+        playerManager = GetComponent<PlayerManager>();
+        animatorManager = GetComponent<AnimatorManager>();
         inputManager = GetComponent<InputManager>();
         playerRigidbody = GetComponent<Rigidbody>();
         cameraObject = Camera.main.transform;
@@ -20,12 +43,20 @@ public class PlayerLocomotion : MonoBehaviour
 
     public void HandleAllMovement()
     {
+        HandleFallingAndLanding();
+        
+        if (playerManager.isInteracting)
+            return;
+
         HandleMovement();
         GyroHandler();
     }
    
     private void HandleMovement()
     {
+        if (isJumping)
+            return;
+
         moveDirection = cameraObject.forward * inputManager.verticalInput;
         moveDirection = moveDirection + cameraObject.right * inputManager.horizontalInput;
         moveDirection.Normalize();
@@ -38,6 +69,9 @@ public class PlayerLocomotion : MonoBehaviour
 
     private void GyroHandler()
     {
+        if (isJumping)
+            return;
+
         Vector3 targetDirection = Vector3.zero;
         
         targetDirection = cameraObject.forward * inputManager.verticalInput;
@@ -53,4 +87,53 @@ public class PlayerLocomotion : MonoBehaviour
 
         transform.rotation = playerRotation;
     }
+
+    private void HandleFallingAndLanding()
+    {
+        RaycastHit hit;
+        Vector3 rayCastOrigin = transform.position;
+        rayCastOrigin.y = rayCastOrigin.y + rayCastHeightOffSet;
+            // ! is NOT; ''if isGrounded is false''
+        if (!isGrounded && !isJumping)
+        {
+            if (!playerManager.isInteracting)
+            {
+                animatorManager.PlayTargetAnimation("Falling", true);
+            }
+
+            inAirTimer = inAirTimer + Time.deltaTime;
+            playerRigidbody.AddForce(transform.forward * leapingVelocity);
+            playerRigidbody.AddForce(-Vector3.up * fallingVelocity * inAirTimer);
+        }
+
+        if (Physics.SphereCast(rayCastOrigin, 0.5f, -Vector3.up, out hit, maxDistance, groundLayer))
+        {
+            if (!isGrounded && !playerManager.isInteracting)
+            {
+                animatorManager.PlayTargetAnimation("Land", true);
+            }
+
+            inAirTimer = 0;
+            isGrounded = true;
+            playerManager.isInteracting = false;
+        }
+        {
+            isGrounded = false;
+        }
+    }
+
+    public void HandleJumping()
+    {
+        if (isGrounded)
+        {
+            animatorManager.animator.SetBool("isJumping", true);
+            animatorManager.PlayTargetAnimation("Jump", false);
+
+            float jumpingVelocity = Mathf.Sqrt(-2 * gravityIntesity * jumpHeight);
+            Vector3 playerVelocity = moveDirection;
+            playerVelocity.y = jumpingVelocity;
+            playerRigidbody.linearVelocity = playerVelocity;
+        }
+    }
+
 }
