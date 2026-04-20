@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "name": "TestControl",
+    "maps": [
+        {
+            "name": "Test Action Map",
+            "id": "306bdfec-7412-473f-82cc-31071b5cf0b9",
+            "actions": [
+                {
+                    "name": "Jump",
+                    "type": "Button",
+                    "id": "98ac31b2-52d8-4274-a8af-540afd20d572",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "273036c2-f8f6-476d-a330-d98ca9bc2b0d",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
