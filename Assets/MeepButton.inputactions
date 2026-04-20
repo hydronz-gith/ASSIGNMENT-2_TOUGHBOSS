@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "name": "MeepButton",
+    "maps": [
+        {
+            "name": "Meepbutton",
+            "id": "f49cff22-2cbd-4129-8ef9-eb52bbeb23e8",
+            "actions": [
+                {
+                    "name": "meepmeep",
+                    "type": "Button",
+                    "id": "b0868fb3-8f2b-4c8b-8a71-f388a600acc5",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "cf19f29a-1ab2-4f53-97c1-c452e6bb1f75",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "meepmeep",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
