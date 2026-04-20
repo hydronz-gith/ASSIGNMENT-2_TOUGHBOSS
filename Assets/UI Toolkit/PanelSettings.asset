@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 19101, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: PanelSettings
   m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.PanelSettings
+  themeUss: {fileID: -4733365628477956816, guid: be4dd429c6d773e499efd747fb61dbd4, type: 3}
   themeUss: {fileID: -4733365628477956816, guid: 2c84016907cdc425db2bcc48d7986b64, type: 3}
   m_DisableNoThemeWarning: 0
   m_TargetTexture: {fileID: 0}
