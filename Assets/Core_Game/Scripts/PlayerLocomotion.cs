@@ -17,19 +17,23 @@ public class PlayerLocomotion : MonoBehaviour
     public float leapingVelocity;
     public float fallingVelocity;
     public float rayCastHeightOffSet = 0.5f;
-    public float maxDistance = 1;
+    public float maxDistance = 0.5f;
     public LayerMask groundLayer;
 
     [Header("Movement Flags")]
-    public bool isJumping;
+    public  bool isSprinting;
     public bool isGrounded;
+    public bool isJumping;
+    
 
     [Header("Jump Speeds")]
     public float jumpHeight = 3;
     public float gravityIntesity = -15;
 
     [Header("Movement Speeds")]
-    public float movementSpeed = 7;
+    public float walkingSpeed = 1.5f;
+    public float runningSpeed = 5;
+    public float sprintingSpeed = 7;
     public float rotationSpeed = 15;
 
     private void Awake()
@@ -51,7 +55,7 @@ public class PlayerLocomotion : MonoBehaviour
         HandleMovement();
         GyroHandler();
     }
-   
+
     private void HandleMovement()
     {
         if (isJumping)
@@ -61,7 +65,22 @@ public class PlayerLocomotion : MonoBehaviour
         moveDirection = moveDirection + cameraObject.right * inputManager.horizontalInput;
         moveDirection.Normalize();
         moveDirection.y = 0;
-        moveDirection = moveDirection * movementSpeed;
+
+        if (isSprinting)
+        {
+            moveDirection = moveDirection * sprintingSpeed;
+        }
+        else
+        {
+            if (inputManager.moveAmount >= 0.5f)
+            {
+                moveDirection = moveDirection * runningSpeed;
+            }
+            else
+            {
+                moveDirection = moveDirection * walkingSpeed;
+            }
+        }
 
         Vector3 movementVelocity = moveDirection;
         playerRigidbody.linearVelocity = movementVelocity;
@@ -93,7 +112,6 @@ public class PlayerLocomotion : MonoBehaviour
         RaycastHit hit;
         Vector3 rayCastOrigin = transform.position;
         rayCastOrigin.y = rayCastOrigin.y + rayCastHeightOffSet;
-            // ! is NOT; ''if isGrounded is false''
         if (!isGrounded && !isJumping)
         {
             if (!playerManager.isInteracting)
@@ -106,17 +124,17 @@ public class PlayerLocomotion : MonoBehaviour
             playerRigidbody.AddForce(-Vector3.up * fallingVelocity * inAirTimer);
         }
 
-        if (Physics.SphereCast(rayCastOrigin, 0.5f, -Vector3.up, out hit, maxDistance, groundLayer))
+        if (Physics.SphereCast(rayCastOrigin, 0.2f, -Vector3.up, out hit, maxDistance, groundLayer))
         {
-            if (!isGrounded && !playerManager.isInteracting)
+            if (!isGrounded && playerManager.isInteracting)
             {
                 animatorManager.PlayTargetAnimation("Land", true);
             }
 
             inAirTimer = 0;
             isGrounded = true;
-            playerManager.isInteracting = false;
         }
+        else
         {
             isGrounded = false;
         }

@@ -15,7 +15,7 @@ namespace InfimaGames.LowPolyShooterPack
         
         [Tooltip("Total Ammunition.")]
         [SerializeField]
-        private int ammunitionTotal = 10;
+        private int ammunitionTotal = 40;
 
         [Header("Interface")]
 

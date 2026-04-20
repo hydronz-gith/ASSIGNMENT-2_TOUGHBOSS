@@ -19,11 +19,11 @@ namespace InfimaGames.LowPolyShooterPack
         
         [Tooltip("How fast the projectiles are.")]
         [SerializeField]
-        public float projectileImpulse = 400.0f;
+        public float projectileImpulse = 500.0f;
 
         [Tooltip("Amount of shots this weapon can shoot in a minute. It determines how fast the weapon shoots.")]
         [SerializeField] 
-        public int roundsPerMinutes = 200;
+        public int roundsPerMinutes = 300;
 
         [Tooltip("Mask of things recognized when firing.")]
         [SerializeField]

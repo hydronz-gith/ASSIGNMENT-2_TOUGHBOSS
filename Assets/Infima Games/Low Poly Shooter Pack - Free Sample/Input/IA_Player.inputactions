@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "name": "IA_Player",
     "maps": [
         {
@@ -27,7 +28,7 @@
                     "name": "Fire",
                     "type": "Button",
                     "id": "a299f9af-95f1-47fd-bf72-fec244e341fd",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -154,7 +155,7 @@
                 {
                     "name": "",
                     "id": "aeaa395a-3661-42a1-a33c-7a8c790be880",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -176,7 +177,7 @@
                 {
                     "name": "",
                     "id": "8cffb61f-8b30-49c6-8800-6616f944844d",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -198,7 +199,7 @@
                 {
                     "name": "",
                     "id": "3612ffab-101e-4e71-bfcd-6bf41f67f0e4",
-                    "path": "<Keyboard>/r",
+                    "path": "<Keyboard>/l",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

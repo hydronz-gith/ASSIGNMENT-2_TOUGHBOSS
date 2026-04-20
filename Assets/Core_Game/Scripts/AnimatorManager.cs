@@ -20,11 +20,34 @@ public class AnimatorManager : MonoBehaviour
         animator.CrossFade(targetAnimation, 0.2f);
     }
 
-    public void UpdateAnimatorValues(float horizontalMovement, float verticalMovement)
+    public void UpdateAnimatorValues(float horizontalMovement, float verticalMovement, bool isSprinting)
     {
         // Animation Snapping
         float snappedHorizontal;
         float snappedVertical;
+
+        #region Snapped Horizontal
+        if (horizontalMovement > 0 && horizontalMovement < 0.55f)
+        {
+            snappedHorizontal = 0.5f;
+        }
+        else if (horizontalMovement > 0.55f)
+        {
+            snappedHorizontal = 1;
+        }
+        else if (horizontalMovement < 0 && horizontalMovement > -0.55f)
+        {
+            snappedHorizontal = -0.5f;
+        }
+        else if (horizontalMovement < -0.55f)
+        {
+            snappedHorizontal = -1;
+        }
+        else
+        {
+            snappedHorizontal = 0;
+        }
+        #endregion
 
         #region Snapped Vertical
         if (verticalMovement > 0 && verticalMovement < 0.55f)
@@ -49,28 +72,11 @@ public class AnimatorManager : MonoBehaviour
         }
         #endregion
 
-        #region Snapped Horizontal
-        if (horizontalMovement > 0 && horizontalMovement < 0.55f)
+        if (isSprinting)
         {
-            snappedHorizontal = 0.5f;
+            snappedHorizontal = horizontalMovement;
+            snappedVertical = 2;
         }
-        else if (horizontalMovement > 0.55f)
-        {
-            snappedHorizontal = 1;
-        }
-        else if (horizontalMovement < 0 && horizontalMovement > -0.55f)
-        {
-            snappedHorizontal = -0.5f;
-        }
-        else if (horizontalMovement < -0.55f)
-        {
-            snappedHorizontal = -1;
-        }
-        else
-        {
-            snappedHorizontal = 0;
-        }
-        #endregion
 
         animator.SetFloat(horizontal, snappedHorizontal, 0.1f, Time.deltaTime);
         animator.SetFloat(vertical, snappedVertical, 0.1f, Time.deltaTime);
